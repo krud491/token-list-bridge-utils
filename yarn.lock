@@ -9,14 +9,15 @@
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.0"
 
-"@arbitrum/sdk@^3.1.6":
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/@arbitrum/sdk/-/sdk-3.1.6.tgz#0a64728040bd1ca4d6d8024946991308d248f303"
-  integrity sha512-wY7RHmvY26yc/OuwpJY+kjgAmUJZDGDXaQxfSQTp2t6sSFO+8oFFVsKIthBCY2RpDGFUVTGpRjCUEXiuJ6/SFA==
+"@arbitrum/sdk@^3.7.2":
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/@arbitrum/sdk/-/sdk-3.7.3.tgz#329f07bd1006c36abc138979406a5dc465a5370d"
+  integrity sha512-7nyPm7032+RyjfIFpJf7EKN6EQTtjEzGGemz6NgFzEFLmKj1q+QMRVj9yYKVjIM2lPMKh7Qv+DX6emsxy/5FdQ==
   dependencies:
     "@ethersproject/address" "^5.0.8"
     "@ethersproject/bignumber" "^5.1.1"
     "@ethersproject/bytes" "^5.0.8"
+    async-mutex "^0.4.0"
     ethers "^5.1.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.16.7":
@@ -2389,6 +2390,13 @@ async-limiter@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
+
+async-mutex@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/async-mutex/-/async-mutex-0.4.1.tgz#bccf55b96f2baf8df90ed798cb5544a1f6ee4c2c"
+  integrity sha512-WfoBo4E/TbCX1G95XTjbWTE3X2XLG0m1Xbv2cwOtuPdyH9CZvnaA5nCt1ucjaKEgW2A5IF71hxrRhr83Je5xjA==
+  dependencies:
+    tslib "^2.4.0"
 
 asynckit@^0.4.0:
   version "0.4.0"
@@ -7784,6 +7792,11 @@ tslib@^2.0.3, tslib@^2.3.1, tslib@^2.5.0, tslib@^2.6.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.1.tgz#fd8c9a0ff42590b25703c0acb3de3d3f4ede0410"
   integrity sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==
+
+tslib@^2.4.0:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
+  integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 tsutils@^3.21.0:
   version "3.21.0"
