@@ -53,7 +53,7 @@
     "@uniswap/sdk-core": "^4.2.1",
     "axios": "^0.26.0",
     "dotenv": "^16.0.1",
-    "ethers": "^5.6.5",
+    "ethers": "^5.8.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "prettier": "^3.0.1",
