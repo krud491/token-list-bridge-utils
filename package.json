@@ -30,6 +30,10 @@
   },
   "license": "GPL-3.0-or-later",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Uniswap/token-list-bridge-utils.git"
+  },
   "module": "dist/token-list-bridge-utils.esm.js",
   "name": "@uniswap/token-list-bridge-utils",
   "prettier": {
@@ -47,7 +51,7 @@
     "deduplicate": "yarn-deduplicate --strategy=highest"
   },
   "typings": "dist/index.d.ts",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "dependencies": {
     "@arbitrum/sdk": "^3.1.6",
     "@uniswap/sdk-core": "^4.2.1",
