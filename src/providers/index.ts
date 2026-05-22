@@ -5,6 +5,7 @@ import { OptimismMappingProvider } from './OptimismMappingProvider'
 import { PolygonMappingProvider } from './PolygonMappingProvider'
 import { BnbMappingProvider } from './BnbMappingProvider'
 import { UnichainMappingProvider } from './UnichainMappingProvider'
+import { MonadMappingProvider } from './MonadMappingProvider'
 import { TokenInfo, TokenList } from '@uniswap/token-lists'
 import { ethers } from 'ethers'
 import {
@@ -25,6 +26,7 @@ import { AvalancheMappingProvider } from './AvalancheMappingProvider'
 import { BaseMappingProvider } from './BaseMappingProvider'
 import { CeloMappingProvider } from './CeloMappingProvider'
 import { SoneiumMappingProvider } from './SoneiumMappingProvider'
+import { isTokenExcluded } from '../constants/excludedTokens'
 
 const web3 = new Web3()
 
@@ -39,6 +41,7 @@ const CHAINS_WITH_MAPPING_PROVIDERS = [
   ChainId.BASE,
   ChainId.UNICHAIN,
   ChainId.SONEIUM,
+  ChainId.MONAD,
 ]
 
 export async function buildList(
@@ -72,10 +75,17 @@ export async function buildList(
             chainId,
             chainIdToMappingsMap
           )
-          if (chainIdToChildTokenDetailsMap[chainId].childTokenValid) {
+          const childTokenAddress =
+            chainIdToChildTokenDetailsMap[chainId].childTokenAddress
+
+          // Only add bridgeInfo if child token is valid and not excluded
+          if (
+            chainIdToChildTokenDetailsMap[chainId].childTokenValid &&
+            childTokenAddress &&
+            !isTokenExcluded(chainId, childTokenAddress)
+          ) {
             l2MappingExtension.extensions.bridgeInfo[chainId] = {
-              tokenAddress:
-                chainIdToChildTokenDetailsMap[chainId].childTokenAddress,
+              tokenAddress: childTokenAddress,
             }
           }
         })
@@ -83,6 +93,16 @@ export async function buildList(
 
       // build the TokenInfo objects with bridgeInfo extension
       l2ChainIds.concat([ChainId.MAINNET]).forEach((chainId) => {
+        const tokenAddress =
+          chainId === ChainId.MAINNET
+            ? l1Token.address
+            : chainIdToChildTokenDetailsMap[chainId]?.childTokenAddress
+
+        // Skip if token is excluded on this chain
+        if (tokenAddress && isTokenExcluded(chainId, tokenAddress)) {
+          return
+        }
+
         if (
           chainId === ChainId.MAINNET ||
           chainIdToChildTokenDetailsMap[chainId].childTokenValid
@@ -166,6 +186,8 @@ function getMappingProvider(chainId: ChainId, l1TokenList: TokenList) {
       return new UnichainMappingProvider()
     case ChainId.SONEIUM:
       return new SoneiumMappingProvider()
+    case ChainId.MONAD:
+      return new MonadMappingProvider()
     default:
       throw new Error(`Chain ${chainId} not supported for fetching mappings.`)
   }
@@ -233,7 +255,7 @@ async function getChildTokenDetails(
       : undefined
     const childTokenValid = Boolean(
       childTokenAddress &&
-        (chainId === ChainId.UNICHAIN // barring a unichain rpc url, we skip the contract call. Since we're using a manually curated list of tokens, we can assume they exist.
+        (chainId === ChainId.UNICHAIN || chainId === ChainId.MONAD // barring a unichain/monad rpc url, we skip the contract call. Since we're using a manually curated list of tokens, we can assume they exist.
           ? true
           : await hasExistingTokenContract(childTokenAddress, chainId))
     )

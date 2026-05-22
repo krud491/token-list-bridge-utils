@@ -9,6 +9,8 @@ import {
 } from './utils'
 import { verifyExtensions } from './verify'
 
+export { EXCLUDED_TOKENS, isTokenExcluded } from './constants/excludedTokens'
+
 /**
  * Adds bridgeInfo to the given token list for Optimism, Polygon and Arbitrum.
  * @param l1TokenListOrPathOrUrl
@@ -28,6 +30,7 @@ export async function chainify(
     ChainId.BASE,
     ChainId.UNICHAIN,
     ChainId.SONEIUM,
+    ChainId.MONAD,
   ]
 
   const chainified = await chainifyTokenList(l2Chains, l1TokenListOrPathOrUrl)
